@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizations - NY Farmers Markets & Small Businesses</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="interactive-graph.html">Visualizations</a></li>
+      <li><a href="conclusion.html">Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Regional Comparison</h1>
+    <p>Comparing farmers markets and small business growth across New York regions</p>
+  </header>
+
+  <section>
+    <div class="chart-container">
+      <canvas id="interactiveChart"></canvas>
+    </div>
+    <div class="controls">
+      <button id="toggleGrowth">Show/Hide Growth Rate</button>
+      <button id="toggleMarkets">Show/Hide Markets</button>
+    </div>
+    <div class="chart-description">
+      <p>This visualization compares the number of farmers markets and small business growth rates across different regions in New York. The left axis shows the number of farmers markets, while the right axis shows the business growth rate as a percentage. Hover over the bars to see detailed information for each region.</p>
+    </div>
+  </section>
+
+  <script>
+    const ctx = document.getElementById('interactiveChart').getContext('2d');
+    
+    const data = {
+      labels: ['NYC', 'Long Island', 'Hudson Valley', 'Capital Region', 'Western NY'],
+      datasets: [
+        {
+          label: 'Number of Farmers Markets',
+          data: [120, 45, 35, 25, 30],
+          backgroundColor: 'rgba(46, 204, 113, 0.6)',
+          borderColor: 'rgba(46, 204, 113, 1)',
+          borderWidth: 1,
+          yAxisID: 'y'
+        },
+        {
+          label: 'Business Growth Rate (%)',
+          data: [4.5, 3.8, 3.2, 2.9, 2.5],
+          backgroundColor: 'rgba(52, 152, 219, 0.6)',
+          borderColor: 'rgba(52, 152, 219, 1)',
+          borderWidth: 1,
+          yAxisID: 'y1'
+        }
+      ]
+    };
+
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const label = context.dataset.label;
+                const value = context.raw;
+                if (label.includes('Growth Rate')) {
+                  return `${label}: ${value}%`;
+                }
+                return `${label}: ${value}`;
+              }
+            }
+          },
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          y: {
+            type: 'linear',
+            display: true,
+            position: 'left',
+            title: {
+              display: true,
+              text: 'Number of Farmers Markets'
+            },
+            min: 0,
+            max: 130
+          },
+          y1: {
+            type: 'linear',
+            display: true,
+            position: 'right',
+            title: {
+              display: true,
+              text: 'Business Growth Rate (%)'
+            },
+            min: 0,
+            max: 5,
+            grid: {
+              drawOnChartArea: false
+            }
+          }
+        }
+      }
+    });
+
+    // Add interactivity
+    document.getElementById('toggleGrowth').addEventListener('click', function() {
+      const growthDataset = chart.data.datasets[1];
+      growthDataset.hidden = !growthDataset.hidden;
+      chart.update();
+    });
+
+    document.getElementById('toggleMarkets').addEventListener('click', function() {
+      const marketsDataset = chart.data.datasets[0];
+      marketsDataset.hidden = !marketsDataset.hidden;
+      chart.update();
+    });
+  </script>
+</body>
+</html> 
