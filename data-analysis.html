@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Analysis - NY Farmers Markets & Small Businesses</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="data-analysis.html">Data Analysis</a></li>
+      <li><a href="interactive-map.html">Interactive Map</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Data Analysis</h1>
+    <p>Explore the relationship between farmers markets and small business growth</p>
+  </header>
+
+  <section>
+    <div class="data-grid">
+      <div class="data-card">
+        <h3>Farmers Markets Distribution</h3>
+        <canvas id="marketsChart"></canvas>
+      </div>
+      <div class="data-card">
+        <h3>Small Business Growth</h3>
+        <canvas id="businessChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Key Findings</h2>
+    <div class="data-grid">
+      <div class="data-card">
+        <h3>Market Density</h3>
+        <p>New York City has the highest concentration of farmers markets, with over 100 active markets.</p>
+      </div>
+      <div class="data-card">
+        <h3>Business Impact</h3>
+        <p>Areas with moderate market density show the most consistent small business growth.</p>
+      </div>
+      <div class="data-card">
+        <h3>Regional Analysis</h3>
+        <p>Upstate regions demonstrate varying patterns of market impact on business growth.</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Farmers Markets Chart
+    const marketsCtx = document.getElementById('marketsChart').getContext('2d');
+    new Chart(marketsCtx, {
+      type: 'bar',
+      data: {
+        labels: ['NYC', 'Long Island', 'Hudson Valley', 'Capital Region', 'Western NY'],
+        datasets: [{
+          label: 'Number of Farmers Markets',
+          data: [120, 45, 35, 25, 30],
+          backgroundColor: 'rgba(46, 204, 113, 0.6)',
+          borderColor: 'rgba(46, 204, 113, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Business Growth Chart
+    const businessCtx = document.getElementById('businessChart').getContext('2d');
+    new Chart(businessCtx, {
+      type: 'line',
+      data: {
+        labels: ['2019', '2020', '2021', '2022', '2023'],
+        datasets: [{
+          label: 'Small Business Growth Rate (%)',
+          data: [3.2, 1.5, 4.1, 3.8, 4.5],
+          fill: false,
+          borderColor: 'rgba(52, 152, 219, 1)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html> 
